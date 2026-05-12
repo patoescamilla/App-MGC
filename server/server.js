@@ -159,6 +159,18 @@ const writeLog = (message, type = "INFO") => {
 };
 
 // CONEXIÓN
+
+app.get('/api/reservas', async (req, res) => {
+    try {
+        const reservas = await Reservation.find().sort({ createdAt: -1 });
+        writeLog('Panel intranet consultó las reservas');
+        res.json(reservas);
+    } catch (error) {
+        writeLog(`Error al consultar reservas: ${error.message}`, 'ERROR');
+        res.status(500).json({ error: 'No se pudieron obtener las reservas.' });
+    }
+});
+
 const mongoURI = process.env.MONGO_URI;
 
 mongoose.connect(mongoURI)
