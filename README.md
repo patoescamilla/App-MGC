@@ -3,7 +3,7 @@ Qué onda, este es el repo de mi proyecto de DevOps. Es una web app que mezcla *
 ### ¿Qué tiene el proyecto?
 * **Frontend:** Una landing page pro hecha con React y Vite.
 * **Backend:** Un servidor en Node.js que se encarga de la "magia" (rutas y conexión).
-* **Base de Datos:** Uso MongoDB Atlas para guardar la info en la nube.
+* **Base de Datos:** Uso MongoDB para guardar la info en un esquema.
 * **Logs de auditoría:** Cada que pasa algo importante, el server lo anota solito en `/server/logs/app.log`.
 
 ---
