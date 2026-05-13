@@ -171,6 +171,27 @@ app.get('/api/reservas', async (req, res) => {
     }
 });
 
+app.delete('/api/reservas/:id', async (req, res) => {
+    try {
+        await Reservation.findByIdAndDelete(req.params.id);
+
+        writeLog(`Reserva eliminada: ${req.params.id}`);
+
+        res.json({
+            success: true,
+            message: 'Reserva eliminada correctamente'
+        });
+
+    } catch (error) {
+        writeLog(`Error eliminando reserva: ${error.message}`, 'ERROR');
+
+        res.status(500).json({
+            success: false,
+            error: 'No se pudo eliminar la reserva'
+        });
+    }
+});
+
 const mongoURI = process.env.MONGO_URI;
 
 mongoose.connect(mongoURI)

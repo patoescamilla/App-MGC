@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel Interno | Millennium Global Corporativo</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ── Reset y base ── */
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      :root {
+        --bg: #f6f7fb;
+        --surface: rgba(255, 255, 255, 0.94);
+        --surface-strong: #ffffff;
+        --line: rgba(17, 19, 26, 0.12);
+        --line-strong: rgba(35, 66, 185, 0.34);
+        --text: #11131a;
+        --text-muted: rgba(17, 19, 26, 0.68);
+        --accent: #2342b9;
+        --accent-soft: rgba(35, 66, 185, 0.10);
+        --green: #1d7c3b;
+        --red: #a11f30;
+        --amber: #7c5c1d;
+        font-family: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+        color: var(--text);
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      body {
+        min-height: 100vh;
+        background:
+          radial-gradient(circle at 14% 12%, rgba(35,66,185,0.08), transparent 24%),
+          radial-gradient(circle at 84% 18%, rgba(17,19,26,0.08), transparent 24%),
+          linear-gradient(180deg, #fbfcff 0%, #f4f6fb 100%);
+      }
+
+      /* ── Topbar ── */
+      .topbar {
+        width: min(1120px, calc(100% - 2rem));
+        margin: 0 auto;
+        padding: 1.25rem 0 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .brand-mark {
+        width: 2.4rem;
+        height: 2.4rem;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #ffffff 0%, #edf2ff 100%);
+        border: 1px solid rgba(17,19,26,0.9);
+        box-shadow: 0 10px 30px rgba(17,19,26,0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: var(--accent);
+        letter-spacing: 0.05em;
+      }
+
+      .brand-copy strong {
+        display: block;
+        font-size: 1rem;
+        color: var(--text);
+      }
+
+      .brand-copy span {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        font-family: 'IBM Plex Mono', monospace;
+      }
+
+      .badge-intranet {
+        padding: 0.3rem 0.75rem;
+        border-radius: 999px;
+        background: rgba(35,66,185,0.08);
+        border: 1px solid rgba(35,66,185,0.2);
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      /* ── Shell ── */
+      .shell {
+        width: min(1120px, calc(100% - 2rem));
+        margin: 0 auto;
+        padding: 2rem 0 4rem;
+      }
+
+      /* ── Page header ── */
+      .page-header {
+        margin-bottom: 2rem;
+      }
+
+      .page-kicker {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 0.5rem;
+      }
+
+      .page-title {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin-bottom: 0.5rem;
+      }
+
+      .page-desc {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      /* ── Stats ── */
+      .stats-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 1.2rem 1.4rem;
+        box-shadow: 0 4px 20px rgba(17,19,26,0.05);
+      }
+
+      .stat-label {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 0.4rem;
+      }
+
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1;
+      }
+
+      .stat-sub {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-top: 0.25rem;
+      }
+
+      /* ── Toolbar ── */
+      .toolbar {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .toolbar-label {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-right: auto;
+      }
+
+      .filter-btn {
+        padding: 0.45rem 1rem;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--text-muted);
+        font-size: 0.82rem;
+        cursor: pointer;
+        transition: all 160ms ease;
+        font-family: inherit;
+      }
+
+      .filter-btn:hover,
+      .filter-btn.active {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+      }
+
+      .refresh-btn {
+        padding: 0.45rem 1rem;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: var(--surface-strong);
+        color: var(--text);
+        font-size: 0.82rem;
+        cursor: pointer;
+        font-family: 'IBM Plex Mono', monospace;
+        letter-spacing: 0.08em;
+        transition: all 160ms ease;
+      }
+
+      .refresh-btn:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      /* ── Tabla ── */
+      .table-wrap {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(17,19,26,0.07);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.88rem;
+      }
+
+      thead {
+        background: rgba(35,66,185,0.04);
+        border-bottom: 1px solid var(--line);
+      }
+
+      thead th {
+        padding: 0.9rem 1rem;
+        text-align: left;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.62rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        font-weight: 500;
+      }
+
+      tbody tr {
+        border-bottom: 1px solid var(--line);
+        transition: background 140ms ease;
+      }
+
+      tbody tr:last-child { border-bottom: none; }
+
+      tbody tr:hover { background: rgba(35,66,185,0.03); }
+
+      tbody td {
+        padding: 0.9rem 1rem;
+        color: var(--text);
+        vertical-align: top;
+      }
+
+      .td-name strong {
+        display: block;
+        font-weight: 600;
+      }
+
+      .td-name span {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .td-service {
+        font-size: 0.82rem;
+        padding: 0.25rem 0.65rem;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: var(--accent-soft);
+        color: var(--accent);
+        display: inline-block;
+        white-space: nowrap;
+      }
+
+      .td-date {
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .td-msg {
+        max-width: 260px;
+        font-size: 0.83rem;
+        color: var(--text-muted);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .delete-btn {
+        padding: 0.45rem 0.9rem;
+        border: none;
+        border-radius: 8px;
+        background: #a11f30;
+        color: white;
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: opacity 150ms ease;
+    }
+
+.delete-btn:hover {
+  opacity: 0.85;
+}
+
+      /* ── Estados ── */
+      .state-wrap {
+        padding: 3rem 1rem;
+        text-align: center;
+        color: var(--text-muted);
+      }
+
+      .state-wrap p { margin-top: 0.5rem; font-size: 0.9rem; }
+
+      .loader {
+        display: inline-block;
+        width: 28px;
+        height: 28px;
+        border: 3px solid var(--line);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        margin-bottom: 0.75rem;
+      }
+
+      @keyframes spin { to { transform: rotate(360deg); } }
+
+      .error-msg {
+        display: inline-block;
+        background: rgba(161,31,48,0.07);
+        border: 1px solid rgba(161,31,48,0.2);
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        color: var(--red);
+        font-size: 0.88rem;
+        max-width: 420px;
+      }
+
+      /* ── Footer ── */
+      footer {
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      #last-update { font-size: 0.65rem; }
+
+      @media (max-width: 768px) {
+        .stats-row { grid-template-columns: 1fr; }
+        .td-msg { display: none; }
+        table { font-size: 0.82rem; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- ── Header ── -->
+    <header>
+      <div class="topbar">
+        <a class="brand" href="#">
+          <div class="brand-mark">MGC</div>
+          <div class="brand-copy">
+            <strong>Millennium Global Corporativo</strong>
+            <span>Panel interno · Solo acceso autorizado</span>
+          </div>
+        </a>
+        <span class="badge-intranet">Intranet</span>
+      </div>
+    </header>
+
+    <!-- ── Contenido ── -->
+    <main class="shell">
+
+      <div class="page-header">
+        <p class="page-kicker">Panel de administración</p>
+        <h1 class="page-title">Reservaciones recibidas</h1>
+        <p class="page-desc">Consulta y gestiona las asesorías agendadas por los clientes desde la landing page.</p>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <p class="stat-label">Total reservas</p>
+          <p class="stat-value" id="stat-total">—</p>
+          <p class="stat-sub">registradas en la base de datos</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Servicio más solicitado</p>
+          <p class="stat-value" style="font-size:1.1rem;padding-top:0.4rem" id="stat-top">—</p>
+          <p class="stat-sub">tipo de asesoría</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Última reserva</p>
+          <p class="stat-value" style="font-size:1.1rem;padding-top:0.4rem" id="stat-last">—</p>
+          <p class="stat-sub" id="stat-last-name">—</p>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <span class="toolbar-label">Filtrar por servicio</span>
+        <button class="filter-btn active" data-filter="todos" onclick="setFilter('todos', this)">Todos</button>
+        <button class="filter-btn" data-filter="asesoria-ecommerce" onclick="setFilter('asesoria-ecommerce', this)">Ecommerce</button>
+        <button class="filter-btn" data-filter="asesoria-seguros-medicos" onclick="setFilter('asesoria-seguros-medicos', this)">Seguros médicos</button>
+        <button class="filter-btn" data-filter="asesoria-seguros-auto" onclick="setFilter('asesoria-seguros-auto', this)">Seguros auto</button>
+        <button class="filter-btn" data-filter="asesoria-seguros-vida" onclick="setFilter('asesoria-seguros-vida', this)">Seguros vida</button>
+        <button class="filter-btn" data-filter="asesoria-integral" onclick="setFilter('asesoria-integral', this)">Integral</button>
+        <button class="filter-btn" data-filter="otra-reserva" onclick="setFilter('otra-reserva', this)">Otra</button>
+        <button class="refresh-btn" onclick="cargarReservas()">↻ Actualizar</button>
+      </div>
+
+      <!-- Tabla -->
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Servicio</th>
+              <th>Fecha · Hora</th>
+              <th>Agendado el</th>
+              <th>Mensaje</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-body">
+            <tr>
+              <td colspan="5">
+                <div class="state-wrap">
+                  <div class="loader"></div>
+                  <p>Cargando reservas...</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </main>
+
+    <footer>
+      <span>Millennium Global Corporativo · Intranet</span>
+      <span id="last-update">Cargando...</span>
+    </footer>
+
+    <script>
+      // ── Configuración ──────────────────────────────────────────
+      // IMPORTANTE: cambia esta IP por la IP privada de tu EC2 cuando lo despliegues en AWS
+      const API_URL = 'http://34.207.141.49:3000/api/reservas';
+      let todasLasReservas = [];
+      let filtroActivo = 'todos';
+
+      // ── Etiquetas legibles para cada servicio ──────────────────
+      const servicioLabel = {
+        'asesoria-ecommerce':       'Asesoría ecommerce',
+        'asesoria-seguros-medicos': 'Seguros médicos',
+        'asesoria-seguros-auto':    'Seguros auto',
+        'asesoria-seguros-vida':    'Seguros vida',
+        'asesoria-integral':        'Asesoría integral',
+        'otra-reserva':             'Otra asesoría',
+      };
+
+      // ── Formatear fecha ISO → legible ─────────────────────────
+      function formatFecha(iso) {
+        if (!iso) return '—';
+        const d = new Date(iso);
+        return d.toLocaleDateString('es-MX', { day: '2-digit', month: 'short', year: 'numeric' });
+      }
+
+      // ── Cargar reservas desde el backend ──────────────────────
+      async function cargarReservas() {
+        const tbody = document.getElementById('tabla-body');
+        tbody.innerHTML = `
+          <tr><td colspan="5">
+            <div class="state-wrap"><div class="loader"></div><p>Cargando reservas...</p></div>
+          </td></tr>`;
+
+        try {
+          const res = await fetch(API_URL);
+          if (!res.ok) throw new Error(`Error del servidor: ${res.status}`);
+          todasLasReservas = await res.json();
+
+          actualizarStats(todasLasReservas);
+          renderTabla(todasLasReservas, filtroActivo);
+
+          const ahora = new Date().toLocaleTimeString('es-MX');
+          document.getElementById('last-update').textContent = `Última actualización: ${ahora}`;
+
+        } catch (err) {
+          tbody.innerHTML = `
+            <tr><td colspan="5">
+              <div class="state-wrap">
+                <div class="error-msg">
+                  No se pudo conectar con el servidor.<br>
+                  <small>${err.message}</small>
+                </div>
+              </div>
+            </td></tr>`;
+          document.getElementById('last-update').textContent = 'Error al cargar';
+        }
+      }
+
+      // ── Actualizar las tarjetas de estadísticas ───────────────
+      function actualizarStats(reservas) {
+        document.getElementById('stat-total').textContent = reservas.length;
+
+        if (reservas.length === 0) {
+          document.getElementById('stat-top').textContent = '—';
+          document.getElementById('stat-last').textContent = '—';
+          document.getElementById('stat-last-name').textContent = '—';
+          return;
+        }
+
+        // Servicio más solicitado
+        const conteo = {};
+        reservas.forEach(r => { conteo[r.servicio] = (conteo[r.servicio] || 0) + 1; });
+        const topServicio = Object.entries(conteo).sort((a, b) => b[1] - a[1])[0][0];
+        document.getElementById('stat-top').textContent = servicioLabel[topServicio] || topServicio;
+
+        // Última reserva (primera porque vienen ordenadas por fecha desc)
+        const ultima = reservas[0];
+        document.getElementById('stat-last').textContent = formatFecha(ultima.createdAt);
+        document.getElementById('stat-last-name').textContent = ultima.nombre;
+      }
+
+      // ── Renderizar filas de la tabla ──────────────────────────
+      function renderTabla(reservas, filtro) {
+        const tbody = document.getElementById('tabla-body');
+
+        const filtradas = filtro === 'todos'
+          ? reservas
+          : reservas.filter(r => r.servicio === filtro);
+
+        if (filtradas.length === 0) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="6">
+                <div class="state-wrap">
+                  <p>No hay reservas para este filtro.</p>
+                </div>
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        tbody.innerHTML = filtradas.map(r => `
+          <tr>
+
+            <td class="td-name">
+              <strong>${escapar(r.nombre)}</strong>
+              <span>${escapar(r.email)}</span>
+              ${r.telefono ? `<span>${escapar(r.telefono)}</span>` : ''}
+            </td>
+
+            <td>
+              <span class="td-service">
+                ${servicioLabel[r.servicio] || escapar(r.servicio)}
+              </span>
+            </td>
+
+            <td class="td-date">
+              ${escapar(r.fecha)}<br>
+              ${escapar(r.hora)}
+            </td>
+
+            <td class="td-date">
+              ${formatFecha(r.createdAt)}
+            </td>
+
+            <td class="td-msg" title="${escapar(r.mensaje)}">
+              ${escapar(r.mensaje)}
+            </td>
+
+            <td>
+              <button 
+                class="delete-btn"
+                onclick="eliminarReserva('${r._id}')"
+              >
+                Eliminar
+              </button>
+            </td>
+
+          </tr>
+        `).join('');
+      }
+
+      // ── Filtrar al hacer clic en botón ────────────────────────
+      function setFilter(filtro, btn) {
+        filtroActivo = filtro;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderTabla(todasLasReservas, filtro);
+      }
+
+      // ── Escapar HTML para evitar XSS ─────────────────────────
+      function escapar(str) {
+        if (str == null) return '';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      async function eliminarReserva(id) {
+
+  const confirmar = confirm('¿Eliminar esta reserva?');
+
+  if (!confirmar) return;
+
+  try {
+
+    const res = await fetch(`${API_URL}/${id}`, {
+      method: 'DELETE'
+    });
+
+    const data = await res.json();
+
+    alert(data.message);
+
+    cargarReservas();
+
+  } catch (error) {
+
+    alert('Error eliminando reserva');
+
+    console.error(error);
+
+  }
+}
+
+      // ── Arrancar ──────────────────────────────────────────────
+      cargarReservas();
+    </script>
+
+  </body>
+</html>
